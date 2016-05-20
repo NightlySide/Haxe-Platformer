@@ -61,7 +61,7 @@ class Player extends FlxSprite
 		if (velocity.x != 0) 
 			facing = (velocity.x > 0) ? FlxObject.RIGHT : FlxObject.LEFT;
 			
-		if (velocity.y == 0 && up) 
+		if (velocity.y == 0 && up && isTouching(FlxObject.DOWN)) 
 		{
 			velocity.y = -_jumpPower;
 			animation.play('jump');
