@@ -25,15 +25,18 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
 		_map = new TiledLevel(AssetPaths.test__tmx);
+		add(_map.background);
 		for (layer in _map.tileLayers)
 		{
 			add(layer);
 		}
+		
 		var playerSpawn = _map.playerSpawn;
-		_player = new Player(playerSpawn.x, playerSpawn.y - 4);
+		_player = new Player(playerSpawn.x, playerSpawn.y);
 		add(_player);
 		
 		FlxG.camera.follow(_player, TOPDOWN, 1);
+		FlxG.camera.setScrollBoundsRect(0, 0, _map.fullWidth, _map.fullHeight);
 		FlxG.worldBounds.set(0, 0, _map.fullWidth, _map.fullHeight);
 		super.create();
 	}
