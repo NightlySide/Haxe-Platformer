@@ -11,7 +11,6 @@ class Player extends FlxSprite
 {
 	private var _maxHealth:Float  = 100;
 	private var _runSpeed:Float   = 150;
-	private var _gravity:Float 	  = 400;
 	private var _jumpPower:Float  = 200;
 	private var _spawnPoint:FlxPoint;
 	
@@ -34,7 +33,7 @@ class Player extends FlxSprite
 		*/
 		
 		drag.x = _runSpeed * 8;
-		acceleration.y = _gravity;
+		acceleration.y = Reg.gravity;
 		maxVelocity.x = _runSpeed;
 		maxVelocity.y = 3 * _jumpPower;
 		

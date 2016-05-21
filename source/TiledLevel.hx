@@ -19,6 +19,7 @@ class TiledLevel extends TiledMap
 	public var tileLayers:Array<FlxTilemap>; 
 	public var collideLayersID:Array<Int>; 
 	public var playerSpawn:FlxPoint;
+	public var enemiesSpawn:Array<FlxPoint>;
 	public var background:FlxSprite;
 	
 	public function new(data:FlxTiledAsset) 
@@ -27,6 +28,7 @@ class TiledLevel extends TiledMap
 		
 		tileLayers = new Array<FlxTilemap>();
 		collideLayersID = new Array<Int>();
+		enemiesSpawn = new Array<FlxPoint>();
 		
 		
 		for (layer in layers)
@@ -55,10 +57,12 @@ class TiledLevel extends TiledMap
 				var objectLayer:TiledObjectLayer = cast layer;
 				for (object in objectLayer.objects)
 				{
-					switch(object.name)
+					switch(object.type)
 					{
 						case "PlayerSpawn":
 							playerSpawn = new FlxPoint(object.x, object.y);
+						case "Enemy":
+							enemiesSpawn.push(new FlxPoint(object.x, object.y));
 					}
 				}
 			}
