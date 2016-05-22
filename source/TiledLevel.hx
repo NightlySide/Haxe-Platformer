@@ -16,6 +16,7 @@ import flixel.math.FlxPoint;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.tile.FlxTilemap;
 import haxe.io.Path;
+import Portal;
 
 class TiledLevel extends TiledMap
 {
@@ -26,6 +27,7 @@ class TiledLevel extends TiledMap
 	public var enemiesSpawn:Array<FlxPoint>;
 	public var npcs:Map<String, FlxPoint>;
 	public var npcsText:Map<String, String>;
+	public var portals:Map<String, Portal>;
 	public var background:FlxSprite;
 	
 	private var _isBackground:Bool = true;
@@ -39,6 +41,7 @@ class TiledLevel extends TiledMap
 		enemiesSpawn = new Array<FlxPoint>();
 		npcs = new Map<String, FlxPoint>();
 		npcsText = new Map<String, String>();
+		portals = new Map<String, Portal>();
 		collidableTileLayers = new Array<FlxTilemap>();
 		
 		
@@ -83,6 +86,15 @@ class TiledLevel extends TiledMap
 							var pos = new FlxPoint(object.x, object.y);
 							npcs.set(name, pos);
 							npcsText.set(name, text);
+						case "Portal":
+							var name = object.name;
+							var target = object.properties.get("link");
+							var portal = new Portal(object.x, object.y);
+							var exit = (object.properties.get("exit") == "left") ? FlxObject.LEFT : FlxObject.RIGHT;
+							portal.link = target;
+							portal.exit = exit;
+							portals.set(name, portal);
+							
 					}
 				}
 			}

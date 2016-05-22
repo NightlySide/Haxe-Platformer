@@ -18,12 +18,15 @@ class NPC extends FlxSprite
 	{
 		super(X, Y);
 		loadGraphic(SimpleGraphic, true, 64, 64);
+		animation.add("idle", [0, 1, 2, 3], 6, true);
+		
 		acceleration.y = Reg.gravity;
 		
 		name = npcName;
 		
 		_bubble = new NPCBubble(this, text, new FlxRect(X, Y, 200, 50)); 
 		Reg.npcBubbles.add(_bubble);
+		animation.play("idle", false, Reg.random.int(0, 3));
 	}
 	
 	public function setTalking(bool:Bool, time:Float=0.3)

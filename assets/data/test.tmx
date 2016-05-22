@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="16">
+<map version="1.0" orientation="orthogonal" renderorder="left-up" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="17">
  <tileset firstgid="1" name="level_tiles" tilewidth="32" tileheight="32" tilecount="256" columns="10">
   <image source="../images/level_tiles.png" width="320" height="320"/>
   <terraintypes>
@@ -79,9 +79,14 @@
  </layer>
  <objectgroup name="Entities">
   <object id="1" name="PlayerSpawn" type="PlayerSpawn" x="640" y="1312" width="32" height="64"/>
-  <object id="5" name="Enemy" type="Enemy" x="992" y="672" width="16" height="16"/>
+  <object id="5" name="Portal 2" type="Portal" x="1248" y="672" width="32" height="64">
+   <properties>
+    <property name="exit" value="left"/>
+    <property name="link" value="Portal 1"/>
+   </properties>
+  </object>
   <object id="6" name="Enemy" type="Enemy" x="1248" y="1504" width="32" height="32"/>
-  <object id="7" name="Enemy" type="Enemy" x="1504" y="1312" width="32" height="32"/>
+  <object id="7" name="Enemy" type="Enemy" x="1408" y="1376" width="32" height="32"/>
   <object id="9" name="Thorg the Blacksmith" type="NPC" x="160" y="1472" width="32" height="64">
    <properties>
     <property name="text" value="Hi, peasant. It seems to be a good day to fight! Come here to see what I sell ..."/>
@@ -89,7 +94,7 @@
   </object>
   <object id="12" name="Tom the Runner" type="NPC" x="1344" y="1440" width="32" height="64">
    <properties>
-    <property name="text" value="Hey ! I used to be an adventurer like you ...           Then I took an arrow in the knee ..."/>
+    <property name="text" value="Hey ! I used to be an adventurer like you ... Then I took an arrow in the knee ..."/>
    </properties>
   </object>
   <object id="13" name="Eric the ShopKeeper" type="NPC" x="320" y="1472" width="32" height="64">
@@ -99,6 +104,12 @@
   </object>
   <object id="14" name="Enemy" type="Enemy" x="704" y="672" width="16" height="16"/>
   <object id="15" name="Enemy" type="Enemy" x="352" y="672" width="16" height="16"/>
+  <object id="16" name="Portal 1" type="Portal" x="1472" y="1280" width="32" height="64">
+   <properties>
+    <property name="exit" value="left"/>
+    <property name="link" value="Portal 2"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer name="Foreground Tiles" width="50" height="50">
   <properties>

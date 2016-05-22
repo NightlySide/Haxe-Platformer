@@ -9,6 +9,8 @@ import flixel.addons.editors.tiled.TiledMap;
 import flixel.addons.editors.tiled.TiledTileLayer;
 import flixel.addons.editors.tiled.TiledTileSet;
 import flixel.group.FlxGroup;
+import flixel.input.FlxPointer;
+import flixel.math.FlxPoint;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
 import flixel.ui.FlxButton;
@@ -28,12 +30,11 @@ class PlayState extends FlxState
 	private var _hud:HUD;
 	private var _objects:FlxGroup;
 	private var _hazards:FlxGroup;
+	private var _teleportCoolDown:Float = 0;
 	
 	override public function create():Void
-	{
-		Reg.init();
-		
-		_map = new TiledLevel(AssetPaths.test__tmx);
+	{		
+		_map = new TiledLevel(Reg.mapPath);
 		
 		var playerSpawn = _map.playerSpawn;
 		_player = new Player(playerSpawn.x, playerSpawn.y);
@@ -72,6 +73,12 @@ class PlayState extends FlxState
 			add(_map.background);
 		for (layer in _map.backgroundTileLayers)
 			add(layer);
+			
+		for (portal in _map.portals.keys())
+		{
+			Reg.portals.add(_map.portals.get(portal));
+		}
+		add(Reg.portals);
 		
 		for (npcName in _map.npcs.keys())
 		{
@@ -94,6 +101,9 @@ class PlayState extends FlxState
 		add(Reg.npcBubbles);
 		
 		add(_player);
+		
+		for (layer in _map.foregroundTileLayers)
+			add(layer);
 	}
 
 	override public function update(elapsed:Float):Void
@@ -106,6 +116,7 @@ class PlayState extends FlxState
 		FlxG.overlap(Reg.bullets, _hazards, shootHazardsOverlapHandler);
 		FlxG.overlap(_hazards, _player, hazardOverlapHandler);
 		FlxG.overlap(_player, Reg.npcs, npcOverlapHandler);
+		FlxG.overlap(_player, Reg.portals, portalOverlap);
 		
 		for (enemy in Reg.enemies)
 		{
@@ -117,6 +128,8 @@ class PlayState extends FlxState
 			if (!_player.overlaps(npc))
 				npc.setTalking(false);
 		}
+		
+		_teleportCoolDown -= 1;
 	}
 	
 	public function shootHazardsOverlapHandler(playerBullet:Bullet, hazard:FlxObject):Void 
@@ -147,5 +160,20 @@ class PlayState extends FlxState
 	public function npcOverlapHandler(player:Player, npc:NPC)
 	{
 		npc.setTalking(true);
+	}
+	
+	public function portalOverlap(player:Player, portal:Portal)
+	{
+		if (_teleportCoolDown < 0)
+		{
+			var target:Portal = _map.portals.get(portal.link);
+			var exit:FlxPoint = target.getExit();
+			
+			FlxG.camera.fade(FlxColor.BLACK, 0.5, true);
+			player.setPosition(exit.x, exit.y);
+			FlxG.camera.fade(0xff000000, 0.5, true);
+			
+			_teleportCoolDown = 50;
+		}
 	}
 }
