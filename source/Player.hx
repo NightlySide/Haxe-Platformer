@@ -86,8 +86,8 @@ class Player extends FlxSprite
 		var click:Bool = FlxG.mouse.justPressed;
 		if (click)
 		{
-			var gunPos:FlxSprite = new FlxSprite(getMidpoint().x + _weaponOffset.x, getMidpoint().y + _weaponOffset.y);
-			var angle:Float = FlxAngle.angleBetweenMouse(gunPos);
+			var pos:FlxSprite = new FlxSprite(getMidpoint().x, getMidpoint().y);
+			var angle:Float = FlxAngle.angleBetweenMouse(pos);
 			
 			var bullet:Bullet = new Bullet();
 			bullet.speed = 400;
