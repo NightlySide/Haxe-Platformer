@@ -2,7 +2,10 @@ package;
 
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.effects.FlxFlicker;
 import flixel.math.FlxAngle;
+import flixel.math.FlxPoint;
+import flixel.math.FlxRandom;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
@@ -22,7 +25,6 @@ class Enemy extends FlxSprite
 	private var _agroDist:Float;
 	private var _agroing:Bool;
 	private var _canAttack:Bool;
-	private var _needEyeContact:Bool;
 	private var _reloadJump:Int;
 	private var _jumpTimer:Int;
 	
@@ -34,15 +36,18 @@ class Enemy extends FlxSprite
 		_canJump = true;
 		_canWalk = true;
 		_agroDist = 600;
-		_runSpeed = 60;
+		_runSpeed = Reg.random.int(50, 70);
 		_jumpPower = 200;
 		_agroing = false;
 		_canAttack = false;
-		_needEyeContact = true;
 		_reloadJump = 100;
+		_reloadTime = 100;
+		_healthMax = 100;
 		
 		drag.x = _runSpeed * 8;
 		acceleration.y = Reg.gravity;
+		maxVelocity.x = _runSpeed;
+		maxVelocity.y = _jumpPower;
 		
 		setFacingFlip(FlxObject.LEFT, false, false);
 		setFacingFlip(FlxObject.RIGHT, true, false);
@@ -62,18 +67,13 @@ class Enemy extends FlxSprite
 			animation.play('idle');
 	}
 	
-	public function updateDetection(collisionLayer:FlxTilemap)
+	public function updateDetection()
 	{
 		var distanceToPlayer = getMidpoint().distanceTo(_player.getMidpoint());
 		if (distanceToPlayer <= _agroDist)
 		{
-			if (!_needEyeContact || collisionLayer.ray(getMidpoint(), _player.getMidpoint()))
-			{
-				_agroing = true;
-				_canAttack = true;
-			}
-			else
-				_canAttack = false;
+			_agroing = true;
+			_canAttack = true;
 		}
 		else
 			_agroing = false;
@@ -102,10 +102,35 @@ class Enemy extends FlxSprite
 		}
 	}
 	
+	public function shoot()
+	{
+		if (_canAttack)
+		{
+			var bullet:Bullet = new Bullet();
+			var angle:Float = FlxAngle.angleBetween(this, _player);
+			bullet.speed = Reg.random.int(150, 250);
+			bullet.damage = 5;
+			bullet.shoot(new FlxPoint(x, y), angle);
+			Reg.enemyBullets.add(bullet);
+			
+			_shootTimer = _reloadTime;
+		}
+	}
+	
 	override public function update(elapsed:Float):Void 
 	{
 		super.update(elapsed);
 		_jumpTimer -= 1;
+		_shootTimer -= 1;
+		_canAttack = (_shootTimer <= 0);
+		
+		shoot();
+	}
+	
+	override public function hurt(Damage:Float):Void 
+	{
+		super.hurt(Damage);
+		FlxFlicker.flicker(this, 1);
 	}
 	
 }
