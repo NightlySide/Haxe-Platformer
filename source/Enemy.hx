@@ -130,7 +130,7 @@ class Enemy extends FlxSprite
 	override public function hurt(Damage:Float):Void 
 	{
 		super.hurt(Damage);
-		FlxFlicker.flicker(this, 1);
+		FlxFlicker.flicker(this, 0.5);
 	}
 	
 }

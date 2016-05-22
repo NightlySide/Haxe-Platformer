@@ -15,7 +15,6 @@ class HUD extends FlxTypedGroup<FlxSprite>
 	{
 		super();
 		_player = player;
-		trace(_player.health);
 		
 		_txtHealth = new FlxText(20, 2, 0, Std.string(_player.health) + " / " + Std.string(_player.maxHealth), 8);
         _txtHealth.setBorderStyle(SHADOW, FlxColor.GRAY, 1, 1);

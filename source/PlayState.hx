@@ -51,15 +51,29 @@ class PlayState extends FlxState
 			Reg.enemies.add(enemy);
 		}
 		
+		for (npcName in _map.npcs.keys())
+		{
+			var pos = _map.npcs.get(npcName);
+			var text = _map.npcsText.get(npcName);
+			var npc = new NPC(pos.x, pos.y, npcName, text);
+			trace("NPC Name : " + npcName);
+			npc.setTalking(false);
+			Reg.npcs.add(npc);
+		}
+		
 		add(Reg.enemies);
 		add(Reg.bullets);
 		add(Reg.enemyBullets);
+		add(Reg.npcs);
+		add(Reg.npcBubbles);
 		
 		_objects = new FlxGroup();
 		_objects.add(_player);
 		_objects.add(Reg.enemies);
 		_objects.add(Reg.bullets);
 		_objects.add(Reg.enemyBullets);
+		_objects.add(Reg.npcs);
+		_objects.add(Reg.npcBubbles);
 		
 		_hazards = new FlxGroup();
 		_hazards.add(Reg.enemies);
@@ -85,11 +99,17 @@ class PlayState extends FlxState
 		
 		FlxG.overlap(Reg.bullets, _hazards, shootHazardsOverlapHandler);
 		FlxG.overlap(_hazards, _player, hazardOverlapHandler);
+		FlxG.overlap(_player, Reg.npcs, npcOverlapHandler);
 		
 		for (enemy in Reg.enemies)
 		{
 			enemy.updateDetection();
 			enemy.movement();
+		}
+		for (npc in Reg.npcs)
+		{
+			if (!_player.overlaps(npc))
+				npc.setTalking(false);
 		}
 	}
 	
@@ -116,5 +136,10 @@ class PlayState extends FlxState
 			var enemy:Enemy = cast hazard;
 			//player.hurt(1);
 		}
+	}
+	
+	public function npcOverlapHandler(player:Player, npc:NPC)
+	{
+		npc.setTalking(true);
 	}
 }
