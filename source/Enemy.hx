@@ -35,7 +35,7 @@ class Enemy extends FlxSprite
 		
 		_canJump = true;
 		_canWalk = true;
-		_agroDist = 600;
+		_agroDist = 400;
 		_runSpeed = Reg.random.int(50, 70);
 		_jumpPower = 200;
 		_agroing = false;
@@ -76,7 +76,10 @@ class Enemy extends FlxSprite
 			_canAttack = true;
 		}
 		else
+		{
 			_agroing = false;
+			_canAttack = false;
+		}
 	}
 	
 	public function movement()
@@ -104,7 +107,7 @@ class Enemy extends FlxSprite
 	
 	public function shoot()
 	{
-		if (_canAttack)
+		if (_agroing && _canAttack)
 		{
 			var bullet:Bullet = new Bullet();
 			var angle:Float = FlxAngle.angleBetween(this, _player);

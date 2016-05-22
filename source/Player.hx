@@ -30,7 +30,7 @@ class Player extends FlxSprite
 		width = 32;
 		height = 64;
 		offset.set(16, 0);
-		_weaponOffset = new FlxPoint(40+offset.x, 38);
+		_weaponOffset = new FlxPoint(40+offset.x, 30);
 		
 		drag.x = _runSpeed * 8;
 		acceleration.y = Reg.gravity;
@@ -86,7 +86,8 @@ class Player extends FlxSprite
 		var click:Bool = FlxG.mouse.justPressed;
 		if (click)
 		{
-			var angle:Float = FlxAngle.angleBetweenMouse(this);
+			var gunPos:FlxSprite = new FlxSprite(getMidpoint().x + _weaponOffset.x, getMidpoint().y + _weaponOffset.y);
+			var angle:Float = FlxAngle.angleBetweenMouse(gunPos);
 			
 			var bullet:Bullet = new Bullet();
 			bullet.speed = 400;

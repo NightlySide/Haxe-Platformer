@@ -87,7 +87,7 @@
     <property name="text" value="Hi, peasant. It seems to be a good day to fight! Come here to see what I sell ..."/>
    </properties>
   </object>
-  <object id="12" name="Tom the Runner" type="NPC" x="1376" y="1440" width="32" height="64">
+  <object id="12" name="Tom the Runner" type="NPC" x="1344" y="1440" width="32" height="64">
    <properties>
     <property name="text" value="Hey ! I used to be an adventurer like you ...           Then I took an arrow in the knee ..."/>
    </properties>
@@ -101,6 +101,10 @@
   <object id="15" name="Enemy" type="Enemy" x="352" y="672" width="16" height="16"/>
  </objectgroup>
  <layer name="Foreground Tiles" width="50" height="50">
+  <properties>
+   <property name="collide" value="0"/>
+   <property name="tileset" value="level_tiles"/>
+  </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
