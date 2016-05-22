@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 	
-	<app title="Haxe-Platformer" file="Haxe-Platformer" main="Main" version="0.0.4" company="Nightlyside" />
+	<app title="Haxe-Platformer" file="Haxe-Platformer" main="Main" version="0.0.5" company="Nightlyside" />
 	
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
