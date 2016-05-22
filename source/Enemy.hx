@@ -31,7 +31,7 @@ class Enemy extends FlxSprite
 	public function new(?X:Float=0, ?Y:Float=0) 
 	{
 		super(X, Y);
-		makeGraphic(16, 16, FlxColor.RED);
+		makeGraphic(32, 32, FlxColor.RED);
 		
 		_canJump = true;
 		_canWalk = true;
@@ -42,7 +42,7 @@ class Enemy extends FlxSprite
 		_canAttack = false;
 		_reloadJump = 100;
 		_reloadTime = 100;
-		_healthMax = 100;
+		_healthMax = 50;
 		
 		drag.x = _runSpeed * 8;
 		acceleration.y = Reg.gravity;

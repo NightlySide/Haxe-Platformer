@@ -19,7 +19,8 @@ import haxe.io.Path;
 
 class TiledLevel extends TiledMap
 {
-	public var tileLayers:Array<FlxTilemap>; 
+	public var foregroundTileLayers:Array<FlxTilemap>; 
+	public var backgroundTileLayers:Array<FlxTilemap>; 
 	public var collidableTileLayers:Array<FlxTilemap>;
 	public var playerSpawn:FlxPoint;
 	public var enemiesSpawn:Array<FlxPoint>;
@@ -27,11 +28,14 @@ class TiledLevel extends TiledMap
 	public var npcsText:Map<String, String>;
 	public var background:FlxSprite;
 	
+	private var _isBackground:Bool = true;
+	
 	public function new(data:FlxTiledAsset) 
 	{
 		super(data);
 		
-		tileLayers = new Array<FlxTilemap>();
+		foregroundTileLayers = new Array<FlxTilemap>();
+		backgroundTileLayers = new Array<FlxTilemap>();
 		enemiesSpawn = new Array<FlxPoint>();
 		npcs = new Map<String, FlxPoint>();
 		npcsText = new Map<String, String>();
@@ -53,8 +57,11 @@ class TiledLevel extends TiledMap
 				tileMap.width = width;
 				tileMap.height = height;
 				tileMap.loadMapFromCSV(tileLayer.csvData, processedPath, tileSet.tileWidth, tileSet.tileHeight, null, 1, 1, 1);
-
-				tileLayers.push(tileMap);
+				
+				if(_isBackground)
+					backgroundTileLayers.push(tileMap);
+				else
+					foregroundTileLayers.push(tileMap);
 				
 				if (isColliding == "1")
 					collidableTileLayers.push(tileMap);

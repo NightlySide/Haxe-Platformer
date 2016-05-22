@@ -11,25 +11,26 @@ import flixel.util.FlxColor;
 class Player extends FlxSprite
 {
 	public var maxHealth:Float;
-	private var _runSpeed:Float   = 150;
-	private var _jumpPower:Float  = 200;
+	private var _runSpeed:Float   = 250;
+	private var _jumpPower:Float  = 300;
 	private var _spawnPoint:FlxPoint;
 	private var _weaponOffset:FlxPoint;
 	
-	public function new(?X:Float=0, ?Y:Float=0, W:Int=32, H:Int=32) 
+	public function new(?X:Float=0, ?Y:Float=0, W:Int=64, H:Int=64) 
 	{	
 		_spawnPoint = new FlxPoint(X, Std.int(Y - H / 2));
 		maxHealth = 100;
 		
 		super(_spawnPoint.x, _spawnPoint.y);
 		
-		loadGraphic(AssetPaths.player__png, true, 32, 32);
+		loadGraphic(AssetPaths.player__png, true, 64, 64);
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
 		
-		width = 16;
-		offset.set(8, 0);
-		_weaponOffset = new FlxPoint(20+offset.x, 19);
+		width = 32;
+		height = 64;
+		offset.set(16, 0);
+		_weaponOffset = new FlxPoint(40+offset.x, 38);
 		
 		drag.x = _runSpeed * 8;
 		acceleration.y = Reg.gravity;
@@ -62,7 +63,7 @@ class Player extends FlxSprite
 			acceleration.x += drag.x;
 			
 		facing = (FlxG.mouse.x > x) ? FlxObject.RIGHT : FlxObject.LEFT;
-		_weaponOffset.x = (facing == FlxObject.RIGHT) ? 20-8 : 10-8;
+		_weaponOffset.x = (facing == FlxObject.RIGHT) ? 40-16 : 20-16;
 			
 		if (velocity.y == 0 && up && isTouching(FlxObject.DOWN)) 
 		{
@@ -88,7 +89,7 @@ class Player extends FlxSprite
 			var angle:Float = FlxAngle.angleBetweenMouse(this);
 			
 			var bullet:Bullet = new Bullet();
-			bullet.speed = 250;
+			bullet.speed = 400;
 			bullet.shoot(new FlxPoint(x+_weaponOffset.x, y+_weaponOffset.y), angle);
 			Reg.bullets.add(bullet);
 		}

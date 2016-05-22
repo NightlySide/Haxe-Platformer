@@ -21,8 +21,8 @@ class Bullet extends FlxSprite
 		loadGraphic(graphicAsset, false, W, H);
 			
 		scale.set(0.5, 0.5);
-		height = 8;
-		width = 12;
+		height = 16;
+		width = 24;
 		dieOnHitWall = true;
 		dieOnHitEnemy = true;
 		

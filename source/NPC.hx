@@ -16,20 +16,19 @@ class NPC extends FlxSprite
 	
 	public function new(?X:Float = 0, ?Y:Float = 0, npcName:String = "", text:String="", ?SimpleGraphic:FlxGraphicAsset = AssetPaths.npc__png) 
 	{
-		super(X, Y, SimpleGraphic);
+		super(X, Y);
+		loadGraphic(SimpleGraphic, true, 64, 64);
 		acceleration.y = Reg.gravity;
 		
 		name = npcName;
 		
-		_bubble = new NPCBubble(this, text, new FlxRect(X, Y, 100, 50)); 
-		_bubble.visible = false;
+		_bubble = new NPCBubble(this, text, new FlxRect(X, Y, 200, 50)); 
 		Reg.npcBubbles.add(_bubble);
 	}
 	
-	public function setTalking(bool:Bool)
+	public function setTalking(bool:Bool, time:Float=0.3)
 	{
-		//_bubble.show(bool);
-		_bubble.visible = bool;
+		_bubble.show(bool, time);
 	}
 	
 	override public function kill():Void 

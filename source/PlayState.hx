@@ -34,45 +34,21 @@ class PlayState extends FlxState
 		Reg.init();
 		
 		_map = new TiledLevel(AssetPaths.test__tmx);
-		add(_map.background);
-		for (layer in _map.tileLayers)
-		{
-			add(layer);
-		}
 		
 		var playerSpawn = _map.playerSpawn;
 		_player = new Player(playerSpawn.x, playerSpawn.y);
-		add(_player);
 		
-		for (enemy in _map.enemiesSpawn)
-		{
-			var enemy:Enemy = new Enemy(enemy.x, enemy.y);
-			enemy.init(enemy.x, enemy.y, _player);
-			Reg.enemies.add(enemy);
-		}
+		loadLayersAndEntities(_map, _player);
 		
-		for (npcName in _map.npcs.keys())
-		{
-			var pos = _map.npcs.get(npcName);
-			var text = _map.npcsText.get(npcName);
-			var npc = new NPC(pos.x, pos.y, npcName, text);
-			trace("NPC Name : " + npcName);
-			npc.setTalking(false);
-			Reg.npcs.add(npc);
-		}
-		
-		add(Reg.enemies);
 		add(Reg.bullets);
 		add(Reg.enemyBullets);
-		add(Reg.npcs);
-		add(Reg.npcBubbles);
 		
 		_objects = new FlxGroup();
-		_objects.add(_player);
-		_objects.add(Reg.enemies);
-		_objects.add(Reg.bullets);
-		_objects.add(Reg.enemyBullets);
 		_objects.add(Reg.npcs);
+		_objects.add(Reg.enemies);
+		_objects.add(Reg.enemyBullets);
+		_objects.add(Reg.bullets);
+		_objects.add(_player);
 		_objects.add(Reg.npcBubbles);
 		
 		_hazards = new FlxGroup();
@@ -85,9 +61,39 @@ class PlayState extends FlxState
 		FlxG.camera.follow(_player, TOPDOWN, 1);
 		FlxG.camera.setScrollBoundsRect(0, 0, _map.fullWidth, _map.fullHeight);
 		FlxG.worldBounds.set(0, 0, _map.fullWidth, _map.fullHeight);
-		FlxG.camera.fade(0xff000000, 1, true);
+		FlxG.camera.fade(0xff000000, 2, true);
 		
 		super.create();
+	}
+	
+	public function loadLayersAndEntities(map:TiledLevel, player:Player)
+	{
+		if(_map.background != null)
+			add(_map.background);
+		for (layer in _map.backgroundTileLayers)
+			add(layer);
+		
+		for (npcName in _map.npcs.keys())
+		{
+			var pos = _map.npcs.get(npcName);
+			var text = _map.npcsText.get(npcName);
+			var npc = new NPC(pos.x, pos.y, npcName, text);
+			npc.setTalking(false, 0.00001);
+			Reg.npcs.add(npc);
+		}	
+			
+		for (enemy in _map.enemiesSpawn)
+		{
+			var enemy:Enemy = new Enemy(enemy.x, enemy.y);
+			enemy.init(enemy.x, enemy.y, _player);
+			Reg.enemies.add(enemy);
+		}
+		add(Reg.enemies);
+		
+		add(Reg.npcs);
+		add(Reg.npcBubbles);
+		
+		add(_player);
 	}
 
 	override public function update(elapsed:Float):Void

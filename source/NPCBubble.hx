@@ -18,6 +18,8 @@ class NPCBubble extends FlxTypedGroup<FlxSprite>
 	private var _title:FlxText;
 	private var _text:FlxText;
 	
+	private var _tween:FlxTween;
+	
 	public var x:Float;
 	public var y:Float;
 	
@@ -34,29 +36,29 @@ class NPCBubble extends FlxTypedGroup<FlxSprite>
 		add(_sprBack);
 		add(_sprBack2);*/
 		
-		_title = new FlxText(x + 2, y + 2, 0, "["+npc.name+"]", 8);
+		_title = new FlxText(x + 2, y + 2, 0, "["+npc.name+"]", 16);
 		_title.setBorderStyle(SHADOW, FlxColor.GRAY, 1, 1);
 		add(_title);
 		
-		_text = new FlxText();
-		_text.scale.set(1 / 2, 1 / 2);
-		_text.text = text;
-		_text.setPosition(x - _text.width/4 + 2, y + _title.height);
+		_text = new FlxText(x + 2, y + _title.height, size.width, text, 8);
 		add(_text);
 	}
 	
-	public function show(bool:Bool)
+	public function show(bool:Bool, time:Float=0.3)
 	{
-		if (bool)
-			forEach(function(spr:FlxSprite)
-			{
-				FlxTween.tween(spr, { alpha: 1, y: y }, .33, { ease: FlxEase.circIn });
-			});
-		else
-			forEach(function(spr:FlxSprite)
-			{
-				FlxTween.tween(spr, { alpha: 0, y: y - 16 }, .33, { ease: FlxEase.circOut });
-			});
+		if (_tween == null || _tween.finished)
+		{
+			if (bool)
+				forEach(function(spr:FlxSprite)
+				{
+					_tween = FlxTween.tween(spr, { alpha: 1}, time, { ease: FlxEase.circIn });
+				});
+			else
+				forEach(function(spr:FlxSprite)
+				{
+					_tween = FlxTween.tween(spr, { alpha: 0}, time*2, { ease: FlxEase.circOut });
+				});
+		}
 	}
 	
 }

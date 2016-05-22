@@ -13,6 +13,7 @@ class Reg
 	static public var enemyBullets:FlxGroup;
 	static public var npcs:FlxTypedGroup<NPC>;
 	static public var npcBubbles:FlxGroup;
+	static public var player:Player;
 	
 	static public function init()
 	{

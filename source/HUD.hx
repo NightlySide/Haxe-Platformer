@@ -16,11 +16,11 @@ class HUD extends FlxTypedGroup<FlxSprite>
 		super();
 		_player = player;
 		
-		_txtHealth = new FlxText(20, 2, 0, Std.string(_player.health) + " / " + Std.string(_player.maxHealth), 8);
+		_txtHealth = new FlxText(40, 4, 0, Std.string(_player.health) + " / " + Std.string(_player.maxHealth), 16);
         _txtHealth.setBorderStyle(SHADOW, FlxColor.GRAY, 1, 1);
 		add(_txtHealth);
-		_sprHealth = new FlxSprite(4, _txtHealth.y + _txtHealth.height/8 - 3, AssetPaths.heart__png);
-		_sprHealth.scale.set(0.75, 0.75);
+		_sprHealth = new FlxSprite(8, _txtHealth.y + _txtHealth.height/8 - 6, AssetPaths.heart__png);
+		_sprHealth.scale.set(1.5, 1.5);
 		add(_sprHealth);
 		
 		forEach(function(spr:FlxSprite)
