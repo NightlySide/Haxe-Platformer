@@ -10,6 +10,7 @@ class Portal extends FlxSprite
 	public var link:String;
 	public var name:String;
 	public var exit:Int;
+	public var changeMap:Bool;
 	
 	public function new(?X:Float=0, ?Y:Float=0) 
 	{

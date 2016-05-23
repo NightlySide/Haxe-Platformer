@@ -44,7 +44,7 @@ class NPCBubble extends FlxTypedGroup<FlxSprite>
 		add(_text);
 	}
 	
-	public function show(bool:Bool, time:Float=0.3)
+	public function show(bool:Bool, time:Float)
 	{
 		if (_tween == null || _tween.finished)
 		{
@@ -56,7 +56,7 @@ class NPCBubble extends FlxTypedGroup<FlxSprite>
 			else
 				forEach(function(spr:FlxSprite)
 				{
-					_tween = FlxTween.tween(spr, { alpha: 0}, time*2, { ease: FlxEase.circOut });
+					_tween = FlxTween.tween(spr, { alpha: 0}, time*4, { ease: FlxEase.circOut });
 				});
 		}
 	}

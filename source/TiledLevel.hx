@@ -25,8 +25,7 @@ class TiledLevel extends TiledMap
 	public var collidableTileLayers:Array<FlxTilemap>;
 	public var playerSpawn:FlxPoint;
 	public var enemiesSpawn:Array<FlxPoint>;
-	public var npcs:Map<String, FlxPoint>;
-	public var npcsText:Map<String, String>;
+	public var npcs:FlxTypedGroup<NPC>;
 	public var portals:Map<String, Portal>;
 	public var background:FlxSprite;
 	
@@ -39,8 +38,7 @@ class TiledLevel extends TiledMap
 		foregroundTileLayers = new Array<FlxTilemap>();
 		backgroundTileLayers = new Array<FlxTilemap>();
 		enemiesSpawn = new Array<FlxPoint>();
-		npcs = new Map<String, FlxPoint>();
-		npcsText = new Map<String, String>();
+		npcs = new FlxTypedGroup<NPC>();
 		portals = new Map<String, Portal>();
 		collidableTileLayers = new Array<FlxTilemap>();
 		
@@ -84,16 +82,28 @@ class TiledLevel extends TiledMap
 							var name = object.name;
 							var text = object.properties.get("text");
 							var pos = new FlxPoint(object.x, object.y);
-							npcs.set(name, pos);
-							npcsText.set(name, text);
+							var sprite:String = "assets/images/" + object.properties.get("sprite") + ".png";
+							var npc = new NPC(pos.x, pos.y, name, text, sprite);
+							npcs.add(npc);
+							
 						case "Portal":
 							var name = object.name;
 							var target = object.properties.get("link");
 							var portal = new Portal(object.x, object.y);
 							var exit = (object.properties.get("exit") == "left") ? FlxObject.LEFT : FlxObject.RIGHT;
-							portal.link = target;
-							portal.exit = exit;
-							portals.set(name, portal);
+							var changeMap = object.properties.get("changeMap");
+							if (changeMap != null)
+							{
+								portal.changeMap = true;
+								portal.link = changeMap;
+								portals.set(name, portal);
+							}
+							else {
+								portal.changeMap = false;
+								portal.link = target;
+								portal.exit = exit;
+								portals.set(name, portal);
+							}
 							
 					}
 				}

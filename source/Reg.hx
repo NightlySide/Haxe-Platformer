@@ -29,6 +29,11 @@ class Reg
 		enemyBullets = new FlxGroup();
 	}
 	
+	static public function reset()
+	{
+		init();
+	}
+	
 	static function getMousePos()
 	{
 		#if desktop

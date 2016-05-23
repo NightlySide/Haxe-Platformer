@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.effects.FlxFlicker;
 import flixel.math.FlxRect;
@@ -13,6 +14,7 @@ class NPC extends FlxSprite
 	private var _bubble:NPCBubble;
 	
 	public var name:String;
+	public var distanceLook:Float = 150;
 	
 	public function new(?X:Float = 0, ?Y:Float = 0, npcName:String = "", text:String="", ?SimpleGraphic:FlxGraphicAsset = AssetPaths.npc__png) 
 	{
@@ -29,9 +31,14 @@ class NPC extends FlxSprite
 		animation.play("idle", false, Reg.random.int(0, 3));
 	}
 	
-	public function setTalking(bool:Bool, time:Float=0.3)
+	public function setTalking(bool:Bool, time:Float=0.2)
 	{
 		_bubble.show(bool, time);
+	}
+	
+	public function lookAt(target:FlxSprite)
+	{
+		facing = (x - target.x > 0)?FlxObject.RIGHT:FlxObject.LEFT;
 	}
 	
 	override public function kill():Void 

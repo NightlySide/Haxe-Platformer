@@ -31,7 +31,7 @@ class Enemy extends FlxSprite
 	public function new(?X:Float=0, ?Y:Float=0) 
 	{
 		super(X, Y);
-		makeGraphic(32, 32, FlxColor.RED);
+		loadGraphic(AssetPaths.enemy__png, true, 64, 64);
 		
 		_canJump = true;
 		_canWalk = true;
@@ -51,6 +51,9 @@ class Enemy extends FlxSprite
 		
 		setFacingFlip(FlxObject.LEFT, false, false);
 		setFacingFlip(FlxObject.RIGHT, true, false);
+		
+		animation.add("run", [0, 1, 2, 3, 4, 5, 6, 7], 12);
+		animation.add("idle", [6, 7, 0, 7, 6, 0], 12);
 	}
 	
 	public function init(xPos:Float, yPos:Float, player:Player) 
@@ -90,6 +93,7 @@ class Enemy extends FlxSprite
 		
 		if (_agroing)
 		{
+			lookAt(_player);
 			if (_canWalk && velocity.y <= 0)
 			{
 				if(animation.getByName("run") != null)
@@ -103,17 +107,31 @@ class Enemy extends FlxSprite
 				}
 			}
 		}
+		
+		if (velocity.y != 0)
+		{
+			//Don't change animation if our Y vel is zero.
+		}
+		else if(velocity.x == 0)
+			animation.play('idle');
+		else 
+			animation.play('run');
+	}
+	
+	public function lookAt(target:FlxSprite)
+	{
+		facing = (x - target.x > 0)?FlxObject.RIGHT:FlxObject.LEFT;
 	}
 	
 	public function shoot()
 	{
 		if (_agroing && _canAttack)
 		{
-			var bullet:Bullet = new Bullet();
+			var bullet:Bullet = new Bullet(AssetPaths.enemy_bullet__png);
 			var angle:Float = FlxAngle.angleBetween(this, _player);
 			bullet.speed = Reg.random.int(150, 250);
 			bullet.damage = 5;
-			bullet.shoot(new FlxPoint(x, y), angle);
+			bullet.shoot(new FlxPoint(x+32, y+40), angle);
 			Reg.enemyBullets.add(bullet);
 			
 			_shootTimer = _reloadTime;

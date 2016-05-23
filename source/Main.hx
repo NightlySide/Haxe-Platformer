@@ -11,7 +11,7 @@ class Main extends Sprite
 	{
 		super();
 		Reg.init();
-		Reg.mapPath = AssetPaths.test__tmx;
+		Reg.mapPath = AssetPaths.tutorial__tmx;
 		addChild(new FlxGame(Std.int(1280/zoom), Std.int(720/zoom), PlayState));
 	}
 }

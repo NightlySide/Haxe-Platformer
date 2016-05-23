@@ -83,11 +83,8 @@ class PlayState extends FlxState
 		}
 		add(Reg.portals);
 		
-		for (npcName in _map.npcs.keys())
+		for (npc in _map.npcs)
 		{
-			var pos = _map.npcs.get(npcName);
-			var text = _map.npcsText.get(npcName);
-			var npc = new NPC(pos.x, pos.y, npcName, text);
 			npc.setTalking(false, 0.00001);
 			Reg.npcs.add(npc);
 		}	
@@ -130,6 +127,8 @@ class PlayState extends FlxState
 		{
 			if (!_player.overlaps(npc))
 				npc.setTalking(false);
+			if (_player.getMidpoint().distanceTo(npc.getMidpoint()) <= npc.distanceLook)
+				npc.lookAt(_player);
 		}
 		
 		_teleportCoolDown -= 1;
@@ -169,14 +168,24 @@ class PlayState extends FlxState
 	{
 		if (_teleportCoolDown < 0)
 		{
-			var target:Portal = _map.portals.get(portal.link);
-			var exit:FlxPoint = target.getExit();
-			
-			FlxG.camera.fade(FlxColor.BLACK, 0.5, true);
-			player.setPosition(exit.x, exit.y);
-			player.facing = target.exit;
-			FlxG.camera.fade(0xff000000, 0.5, true);
-			
+			if (!portal.changeMap)
+			{
+				var target:Portal = _map.portals.get(portal.link);
+				var exit:FlxPoint = target.getExit();
+				
+				FlxG.camera.fade(FlxColor.BLACK, 0.5, true);
+				player.setPosition(exit.x, exit.y);
+				player.facing = target.exit;
+				FlxG.camera.fade(0xff000000, 0.5, true);
+			}
+			else
+			{
+				Reg.mapPath = "assets/data/"+portal.link+".tmx";
+				
+				FlxG.camera.fade(FlxColor.BLACK, 0.5, true);
+				Reg.reset();
+				FlxG.switchState(new PlayState());
+			}
 			_teleportCoolDown = 50;
 		}
 	}
