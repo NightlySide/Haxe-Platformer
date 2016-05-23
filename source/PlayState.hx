@@ -50,7 +50,6 @@ class PlayState extends FlxState
 		_objects.add(Reg.enemyBullets);
 		_objects.add(Reg.bullets);
 		_objects.add(_player);
-		_objects.add(Reg.npcBubbles);
 		
 		_hazards = new FlxGroup();
 		_hazards.add(Reg.enemies);
@@ -58,6 +57,10 @@ class PlayState extends FlxState
 		
 		_hud = new HUD(_player);
 		add(_hud);
+		
+		#if mobile
+		add(_player.virtualPad);
+		#end
 		
 		FlxG.camera.follow(_player, TOPDOWN, 1);
 		FlxG.camera.setScrollBoundsRect(0, 0, _map.fullWidth, _map.fullHeight);
@@ -73,7 +76,7 @@ class PlayState extends FlxState
 			add(_map.background);
 		for (layer in _map.backgroundTileLayers)
 			add(layer);
-			
+		
 		for (portal in _map.portals.keys())
 		{
 			Reg.portals.add(_map.portals.get(portal));
@@ -171,6 +174,7 @@ class PlayState extends FlxState
 			
 			FlxG.camera.fade(FlxColor.BLACK, 0.5, true);
 			player.setPosition(exit.x, exit.y);
+			player.facing = target.exit;
 			FlxG.camera.fade(0xff000000, 0.5, true);
 			
 			_teleportCoolDown = 50;

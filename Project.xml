@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 	
-	<app title="Haxe-Platformer" file="Haxe-Platformer" main="Main" version="0.0.5" company="Nightlyside" />
+	<app title="Haxe-Platformer" file="Haxe-Platformer" main="Main" version="0.1.0" company="Nightlyside" package="io.github.nightlyside.haxeplatformer" />
 	
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
@@ -14,7 +14,8 @@
 	<!-- ____________________________ Window Settings ___________________________ -->
 	
 	<!--These window settings apply to all targets-->
-	<window width="1280" height="720" fps="60" background="#000000" hardware="true" vsync="true" />
+	<window width="1280" height="720" fps="60" background="#000000" hardware="true" vsync="true" unless="mobile" />
+	<window width="0" height="0" fps="60" background="#000000" hardware="true" vsync="true" if="mobile" />
 	
 	<!--HTML5-specific-->
 	<window if="html5" resizable="false" />
@@ -79,4 +80,10 @@
 	<!-- _________________________________ Custom _______________________________ -->
 	
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
+	
+	<android target-sdk-version="19" />
+	<window hardware="true" allow-shaders="true" require-shaders="true" if="cpp"/>
+	<window vsync="true" antialiasing="4" if="cpp" />
+	<window orientation="portrait" /> || <window orientation="landscape" if="cpp"/>
+	
 </project>

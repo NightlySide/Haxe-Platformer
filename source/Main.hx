@@ -5,7 +5,7 @@ import openfl.display.Sprite;
 
 class Main extends Sprite
 {
-	private var zoom:Float = 1.5;
+	private var zoom:Float = 1.75;
 	
 	public function new()
 	{

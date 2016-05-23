@@ -25,7 +25,7 @@ class Portal extends FlxSprite
 	
 	public function getExit():FlxPoint
 	{
-		var offset = (exit == FlxObject.LEFT) ? -32 : 32; 
+		var offset = (exit == FlxObject.LEFT) ? -48 : 48; 
 		return new FlxPoint(x +	offset, y);
 	}
 	

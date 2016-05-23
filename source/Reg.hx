@@ -31,6 +31,9 @@ class Reg
 	
 	static function getMousePos()
 	{
+		#if desktop
 		return FlxG.mouse.getWorldPosition();
+		#end
+		return null;
 	}
 }
