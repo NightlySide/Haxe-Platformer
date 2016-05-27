@@ -3,3 +3,5 @@ haxe:
   - "3.2.1"
   - development
 neko: "2.0.0"
+hxml:
+  - build.hxml
