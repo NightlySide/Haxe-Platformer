@@ -15,8 +15,9 @@ class NPC extends FlxSprite
 	
 	public var name:String;
 	public var distanceLook:Float = 150;
+	public var id:Int;
 	
-	public function new(?X:Float = 0, ?Y:Float = 0, npcName:String = "", text:String="", ?SimpleGraphic:FlxGraphicAsset = AssetPaths.npc__png) 
+	public function new(?X:Float = 0, ?Y:Float = 0, npcID:Int, npcName:String = "", text:String="", ?SimpleGraphic:FlxGraphicAsset = AssetPaths.npc__png) 
 	{
 		super(X, Y);
 		loadGraphic(SimpleGraphic, true, 64, 64);
@@ -25,6 +26,7 @@ class NPC extends FlxSprite
 		acceleration.y = Reg.gravity;
 		
 		name = npcName;
+		id = npcID;
 		
 		_bubble = new NPCBubble(this, text, new FlxRect(X, Y, 200, 50)); 
 		Reg.npcBubbles.add(_bubble);
@@ -33,7 +35,7 @@ class NPC extends FlxSprite
 	
 	public function setTalking(bool:Bool, time:Float=0.2)
 	{
-		_bubble.show(bool, time);
+		_bubble.show(bool, time);		
 	}
 	
 	public function lookAt(target:FlxSprite)
@@ -50,5 +52,21 @@ class NPC extends FlxSprite
 	{
 		FlxFlicker.flicker(this, 0.5);
 		super.hurt(Damage);
+	}
+	
+	static public function getNPCByName(name:String)
+	{
+		for (npc in Reg.npcs)
+			if (npc.name == name)
+				return npc;
+		return null;
+	}
+	
+	static public function getNPCByID(id:Int)
+	{
+		for (npc in Reg.npcs)
+			if (npc.id == id)
+				return npc;
+		return null;
 	}
 }

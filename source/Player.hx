@@ -8,10 +8,16 @@ import flixel.math.FlxPoint;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.ui.FlxVirtualPad;
 import flixel.util.FlxColor;
+import Quest;
 
 class Player extends FlxSprite
 {
 	public var maxHealth:Float;
+	public var money:Int = 0;
+	public var exp:Float = 0;
+	public var quests:Array<Quest>;
+	public var activeQuestID:Int;
+	
 	private var _runSpeed:Float   = 250;
 	private var _jumpPower:Float  = 300;
 	private var _spawnPoint:FlxPoint;
@@ -26,6 +32,9 @@ class Player extends FlxSprite
 	{	
 		_spawnPoint = new FlxPoint(X, Std.int(Y - H / 2));
 		maxHealth = 100;
+		quests = new Array<Quest>();
+		quests.push(new Quest("tutorial"));
+		activeQuestID = quests[0].id;
 		
 		super(_spawnPoint.x, _spawnPoint.y);
 		
@@ -145,7 +154,13 @@ class Player extends FlxSprite
 	{
 		movement();
 		shoot();
+		for (quest in quests)
+			quest.updateQuest();
 		_fireCoolDown -= 1;
+		
+		var quest:Quest = quests[Quest.findIndexByID(quests, activeQuestID)];
+		if (quest.finished)
+			quest.getReward(this);
 		super.update(elapsed);
 	}
 }

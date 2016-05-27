@@ -10,6 +10,11 @@ import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
 
+enum EnemyType
+{
+	BASIC;
+}
+
 class Enemy extends FlxSprite
 {
 	private var _target:FlxSprite;
@@ -27,6 +32,7 @@ class Enemy extends FlxSprite
 	private var _canAttack:Bool;
 	private var _reloadJump:Int;
 	private var _jumpTimer:Int;
+	private var _enemyType:EnemyType;
 	
 	public function new(?X:Float=0, ?Y:Float=0) 
 	{
@@ -43,6 +49,7 @@ class Enemy extends FlxSprite
 		_reloadJump = 100;
 		_reloadTime = 100;
 		_healthMax = 50;
+		_enemyType = EnemyType.BASIC;
 		
 		drag.x = _runSpeed * 8;
 		acceleration.y = Reg.gravity;
@@ -154,4 +161,19 @@ class Enemy extends FlxSprite
 		FlxFlicker.flicker(this, 0.5);
 	}
 	
+	override public function kill():Void 
+	{
+		Reg.enemiesKilled.set(_enemyType, Reg.enemiesKilled.get(_enemyType) + 1);
+		super.kill();
+	}
+	
+	static public function getEnemyTypeByString(str:String)
+	{
+		switch(str.toLowerCase())
+		{
+			case "basic":
+				return EnemyType.BASIC;
+		}
+		return null;
+	}
 }

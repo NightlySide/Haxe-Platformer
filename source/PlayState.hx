@@ -37,7 +37,8 @@ class PlayState extends FlxState
 		_map = new TiledLevel(Reg.mapPath);
 		
 		var playerSpawn = _map.playerSpawn;
-		_player = new Player(playerSpawn.x, playerSpawn.y);
+		_player = new Player();
+		_player.setPosition(playerSpawn.x, playerSpawn.y);
 		
 		loadLayersAndEntities(_map, _player);
 		
@@ -55,7 +56,7 @@ class PlayState extends FlxState
 		_hazards.add(Reg.enemies);
 		_hazards.add(Reg.enemyBullets);
 		
-		_hud = new HUD(_player);
+		_hud = new HUD(_player, this);
 		add(_hud);
 		
 		#if mobile
@@ -87,6 +88,7 @@ class PlayState extends FlxState
 		{
 			npc.setTalking(false, 0.00001);
 			Reg.npcs.add(npc);
+			Reg.npcTalkedTo.set(npc, false);
 		}	
 			
 		for (enemy in _map.enemiesSpawn)
@@ -127,8 +129,8 @@ class PlayState extends FlxState
 		{
 			if (!_player.overlaps(npc))
 				npc.setTalking(false);
-			if (_player.getMidpoint().distanceTo(npc.getMidpoint()) <= npc.distanceLook)
-				npc.lookAt(_player);
+			//if (_player.getMidpoint().distanceTo(npc.getMidpoint()) <= npc.distanceLook)
+			npc.lookAt(_player);
 		}
 		
 		_teleportCoolDown -= 1;
@@ -141,6 +143,7 @@ class PlayState extends FlxState
 			playerBullet.kill();
 			hazard.hurt(playerBullet.damage);
 		}
+		_hud.updateQuest();
 	}
 	
 	public function hazardOverlapHandler(hazard:FlxObject, player:FlxObject)
@@ -162,6 +165,8 @@ class PlayState extends FlxState
 	public function npcOverlapHandler(player:Player, npc:NPC)
 	{
 		npc.setTalking(true);
+		Reg.npcTalkedTo.set(npc, true);
+		_hud.updateQuest();
 	}
 	
 	public function portalOverlap(player:Player, portal:Portal)

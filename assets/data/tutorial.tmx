@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="left-up" width="100" height="20" tilewidth="32" tileheight="32" nextobjectid="20">
+<map version="1.0" orientation="orthogonal" renderorder="left-up" width="100" height="20" tilewidth="32" tileheight="32" nextobjectid="21">
  <tileset firstgid="1" name="level_tiles" tilewidth="32" tileheight="32" tilecount="100" columns="10">
   <image source="../images/level_tiles.png" width="320" height="320"/>
   <terraintypes>
@@ -86,6 +86,7 @@
   <object id="1" name="PlayerSpawn" type="PlayerSpawn" x="224" y="512" width="32" height="64"/>
   <object id="9" name="Tutorial Guy" type="NPC" x="288" y="512" width="32" height="64">
    <properties>
+    <property name="id" value="0"/>
     <property name="sprite" value="tuto_guy"/>
     <property name="text" value="Hi ! Welcome here new ordinary and already bored player !"/>
    </properties>
@@ -99,12 +100,21 @@
   </object>
   <object id="17" name="Tutorial Guy" type="NPC" x="512" y="512" width="32" height="64">
    <properties>
+    <property name="id" value="1"/>
     <property name="sprite" value="tuto_guy"/>
     <property name="text" value="Right after the fences there is a HILL. Try to go through by jumpin. Ah .. yes ... actually you can jump by pressing the Jump Button !"/>
    </properties>
   </object>
   <object id="18" name="Tutorial Guy" type="NPC" x="1120" y="512" width="32" height="64">
    <properties>
+    <property name="id" value="3"/>
+    <property name="sprite" value="tuto_guy"/>
+    <property name="text" value="Congrats ! You did ... well .. Now take the portal to start your journey !"/>
+   </properties>
+  </object>
+  <object id="20" name="Tutorial Guy" type="NPC" x="928" y="512" width="32" height="64">
+   <properties>
+    <property name="id" value="2"/>
     <property name="sprite" value="tuto_guy"/>
     <property name="text" value="Congrats ! You did ... well .. Now take the portal to start your journey !"/>
    </properties>

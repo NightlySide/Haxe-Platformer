@@ -1,0 +1,13 @@
+{
+	"title" : "Tutorial Quest",
+	"id" : "0",
+	"objectives" : {
+		"0" : ["talk", "0"],
+		"1" : ["kill", "BASIC", "3"],
+		"2" : ["talk", "0"]
+	},
+	"rewards" : {
+		"exp" : "20",
+		"gold" : "5"
+	}
+}

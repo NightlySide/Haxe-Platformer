@@ -80,10 +80,11 @@ class TiledLevel extends TiledMap
 							enemiesSpawn.push(new FlxPoint(object.x, object.y));
 						case "NPC":
 							var name = object.name;
+							var id = Std.parseInt(object.properties.get("id"));
 							var text = object.properties.get("text");
 							var pos = new FlxPoint(object.x, object.y);
 							var sprite:String = "assets/images/" + object.properties.get("sprite") + ".png";
-							var npc = new NPC(pos.x, pos.y, name, text, sprite);
+							var npc = new NPC(pos.x, pos.y, id, name, text, sprite);
 							npcs.add(npc);
 							
 						case "Portal":
