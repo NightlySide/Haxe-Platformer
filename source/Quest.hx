@@ -1,6 +1,6 @@
 package;
 import haxe.Json;
-import sys.io.File;
+import openfl.Assets;
 
 class Quest
 {
@@ -16,7 +16,7 @@ class Quest
 	{
 		objectives = new Array<Objective>();
 		
-		var value = File.getContent("assets/data/quests/"+fileName+".json"),
+		var value = Assets.getText("assets/data/quests/"+fileName+".json"),
         json = Json.parse(value);
 		
 		title = json.title;

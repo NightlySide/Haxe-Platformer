@@ -16,7 +16,6 @@ import flixel.tile.FlxTilemap;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 import flixel.util.FlxColor;
-import haxe.io.Path;
 import lime.project.Haxelib;
 import TiledLevel;
 import Player;
@@ -34,6 +33,7 @@ class PlayState extends FlxState
 	
 	override public function create():Void
 	{		
+		//FlxG.debugger.drawDebug = true;
 		_map = new TiledLevel(Reg.mapPath);
 		
 		var playerSpawn = _map.playerSpawn;

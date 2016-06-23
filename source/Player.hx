@@ -72,7 +72,8 @@ class Player extends FlxSprite
 		virtualPad.forEach(function (spr:FlxSprite)
 		{
 			spr.y = FlxG.height - h - 32;
-			spr.setSize(64, 64);
+			spr.height *= 2;
+			spr.width *= 2;
 		});
 		#end
 	}
