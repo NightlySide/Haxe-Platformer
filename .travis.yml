@@ -1,10 +1,23 @@
+sudo: required
+dist: trusty
+
 language: haxe
+
+os:
+  - linux
+  - osx
+  
 haxe:
   - "3.2.1"
   - development
-env: 
-  - TARGET=flash
-  - TARGET=neko
-  - TARGET=cpp
-  - TARGET=html5
- 
+  
+matrix:
+  allow_failures:
+    - haxe: development
+    
+install:
+  - haxelib install travix
+  - haxelib run travix install
+
+script:
+  - haxelib run travix neko

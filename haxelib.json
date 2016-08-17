@@ -1,0 +1,12 @@
+{
+  "name": "Haxe-Platformer",
+  "license": "MIT",
+  "tags": [],
+  "classPath": ".",
+  "contributors": [
+    "Nightlyside"
+  ],
+  "releasenote": "initial release",
+  "version": "0.0.0",
+  "dependencies": {}
+}
