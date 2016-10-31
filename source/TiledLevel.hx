@@ -6,7 +6,7 @@ import flixel.FlxSprite;
 import flixel.addons.editors.tiled.TiledImageLayer;
 import flixel.addons.editors.tiled.TiledLayer;
 import flixel.addons.editors.tiled.TiledMap;
-import flixel.addons.editors.tiled.TiledMap.FlxTiledAsset;
+import flixel.addons.editors.tiled.TiledMap.FlxTiledMapAsset;
 import flixel.addons.editors.tiled.TiledObjectLayer;
 import flixel.addons.editors.tiled.TiledTileLayer;
 import flixel.addons.editors.tiled.TiledTileSet;
@@ -31,7 +31,7 @@ class TiledLevel extends TiledMap
 	
 	private var _isBackground:Bool = true;
 	
-	public function new(data:FlxTiledAsset) 
+	public function new(data:FlxTiledMapAsset) 
 	{
 		super(data);
 		
